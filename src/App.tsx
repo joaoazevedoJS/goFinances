@@ -1,10 +1,16 @@
 import { FC } from 'react';
 
+import { Header } from './components/Header';
+
+import GlobalStyle from './styles/global';
+
 const App: FC = () => {
   return (
-    <div className="App">
-      <h1>Hello world</h1>
-    </div>
+    <>
+      <GlobalStyle />
+
+      <Header />
+    </>
   );
 };
 
