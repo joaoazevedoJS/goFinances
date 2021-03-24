@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { Header } from './components/Header';
+import { Dashboard } from './pages/Dashboard';
 
 import GlobalStyle from './styles/global';
 
@@ -9,7 +9,7 @@ const App: FC = () => {
     <>
       <GlobalStyle />
 
-      <Header />
+      <Dashboard />
     </>
   );
 };
