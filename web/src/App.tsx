@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { TransactionsProvider } from './hooks/transactions';
 
 import { Dashboard } from './pages/Dashboard';
 
@@ -9,7 +10,9 @@ const App: FC = () => {
     <>
       <GlobalStyle />
 
-      <Dashboard />
+      <TransactionsProvider>
+        <Dashboard />
+      </TransactionsProvider>
     </>
   );
 };
