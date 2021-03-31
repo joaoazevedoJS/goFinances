@@ -68,8 +68,13 @@ const GlobalStyle = createGlobalStyle`
     justify-content: center;
   }
 
-  .react-modal-content {
+  .react-modal {
+    outline: none;
     max-width: 576px;
+    width: 100%;
+  }
+
+  .react-modal-content {
     width: 100%;
     background: var(--background);
     padding: 3rem;
