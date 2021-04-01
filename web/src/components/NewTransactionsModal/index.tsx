@@ -8,8 +8,16 @@ import { useTransactions } from '../../hooks/transactions';
 import incomeImg from '../../assets/income.svg';
 import outcomeImg from '../../assets/outcome.svg';
 
-import { Container, TransactionTypeContainer, RadioBox } from './styles';
 import { Input } from '../Input';
+
+import { Container, TransactionTypeContainer, RadioBox } from './styles';
+import fakeapi from '../../services/fakeapi';
+
+interface CreateTransaction {
+  title: string;
+  value: number;
+  category: string;
+}
 
 const NewTransactionsModal: FC = () => {
   const DraggableRef = useRef(null);
@@ -21,9 +29,21 @@ const NewTransactionsModal: FC = () => {
 
   const [type, setType] = useState<'deposit' | 'withdraw'>('deposit');
 
-  const handleCreateNewTransaction = useCallback((data: any) => {
-    console.log(data);
-  }, []);
+  const handleCreateNewTransaction = useCallback(
+    (data: CreateTransaction) => {
+      const transaction = {
+        title: data.title,
+        value: data.value,
+        type,
+        category: data.category,
+      };
+
+      fakeapi.post('/transactions', transaction);
+
+      handleCloseModalTransaction();
+    },
+    [type, handleCloseModalTransaction],
+  );
 
   return (
     <Modal
