@@ -1,25 +1,10 @@
-import { FC, useEffect, useState } from 'react';
-import fakeapi from '../../services/fakeapi';
+import { FC } from 'react';
+import { useTransactions } from '../../hooks/transactions';
 
 import { Container } from './styles';
 
-interface TransactionData {
-  id: number;
-  title: string;
-  type: 'deposit' | 'withdraw';
-  category: string;
-  amount: number;
-  createdAt: Date;
-}
-
 const TransactionsTable: FC = () => {
-  const [transactions, setTransactions] = useState<TransactionData[]>([]);
-
-  useEffect(() => {
-    fakeapi
-      .get('/transactions')
-      .then(response => setTransactions(response.data.transactions));
-  }, []);
+  const { transactions } = useTransactions();
 
   return (
     <Container>
@@ -41,7 +26,7 @@ const TransactionsTable: FC = () => {
                 {new Intl.NumberFormat('pt-BR', {
                   style: 'currency',
                   currency: 'BRL',
-                }).format(transaction.amount)}
+                }).format(transaction.value)}
               </td>
               <td>{transaction.category}</td>
               <td>

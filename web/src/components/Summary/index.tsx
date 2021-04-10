@@ -3,10 +3,13 @@ import { FC } from 'react';
 import incomeImg from '../../assets/income.svg';
 import outcomeImg from '../../assets/outcome.svg';
 import totalImg from '../../assets/total.svg';
+import { useTransactions } from '../../hooks/transactions';
 
 import { Container } from './styles';
 
 const Summary: FC = () => {
+  const { balance } = useTransactions();
+
   return (
     <Container>
       <div>
@@ -16,7 +19,12 @@ const Summary: FC = () => {
           <img src={incomeImg} alt="Entradas" />
         </header>
 
-        <strong>R$ 1.000,00</strong>
+        <strong>
+          {new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+          }).format(balance.deposits)}
+        </strong>
       </div>
 
       <div>
@@ -26,7 +34,13 @@ const Summary: FC = () => {
           <img src={outcomeImg} alt="Saídas" />
         </header>
 
-        <strong>- R$ 500,00</strong>
+        <strong>
+          -
+          {new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+          }).format(balance.withdrawns)}
+        </strong>
       </div>
 
       <div>
@@ -36,7 +50,12 @@ const Summary: FC = () => {
           <img src={totalImg} alt="Total" />
         </header>
 
-        <strong>R$ 500,00</strong>
+        <strong>
+          {new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+          }).format(balance.total)}
+        </strong>
       </div>
     </Container>
   );

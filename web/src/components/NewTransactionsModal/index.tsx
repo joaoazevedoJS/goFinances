@@ -1,23 +1,16 @@
-import { FC, FormEvent, useCallback, useRef, useState } from 'react';
+import { FC, useCallback, useRef, useState } from 'react';
 import { FiX } from 'react-icons/fi';
 import Modal from 'react-modal';
 import Draggable from 'react-draggable';
 
-import { useTransactions } from '../../hooks/transactions';
+import { CreateTransaction, useTransactions } from '../../hooks/transactions';
+
+import { Input } from '../Input';
 
 import incomeImg from '../../assets/income.svg';
 import outcomeImg from '../../assets/outcome.svg';
 
-import { Input } from '../Input';
-
 import { Container, TransactionTypeContainer, RadioBox } from './styles';
-import fakeapi from '../../services/fakeapi';
-
-interface CreateTransaction {
-  title: string;
-  value: number;
-  category: string;
-}
 
 const NewTransactionsModal: FC = () => {
   const DraggableRef = useRef(null);
@@ -25,24 +18,16 @@ const NewTransactionsModal: FC = () => {
   const {
     isNewTransactionModalOpen,
     handleCloseModalTransaction,
+    handleCreateTransaction,
   } = useTransactions();
 
   const [type, setType] = useState<'deposit' | 'withdraw'>('deposit');
 
   const handleCreateNewTransaction = useCallback(
-    (data: CreateTransaction) => {
-      const transaction = {
-        title: data.title,
-        value: data.value,
-        type,
-        category: data.category,
-      };
-
-      fakeapi.post('/transactions', transaction);
-
-      handleCloseModalTransaction();
+    (data: Omit<CreateTransaction, 'type'>) => {
+      handleCreateTransaction({ ...data, type });
     },
-    [type, handleCloseModalTransaction],
+    [handleCreateTransaction, type],
   );
 
   return (
